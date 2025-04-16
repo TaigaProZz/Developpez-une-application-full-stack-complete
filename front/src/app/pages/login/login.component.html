@@ -1,0 +1,32 @@
+<nav class="hidden md:flex md:w-full">
+  <div class="w-full flex flex-col px-4 py-2 text-black md:h-[94px]">
+    <img ngSrc="assets/logo_p6.png" alt="Logo" height="140" width="81">
+    <mat-divider></mat-divider>
+  </div>
+</nav>
+
+<div class="p-4 flex flex-col items-center justify-center">
+  <a routerLink="/" class="cursor-pointer self-start">
+    <p class="text-5xl">←</p>
+  </a>
+
+  <div class="w-full flex flex-col items-center justify-center">
+    <img ngSrc="assets/logo_p6.png" alt="Logo" class="md:hidden" height="401" width="695">
+    <h1>Se connecter</h1>
+  </div>
+
+  <form class="max-w-[250px]" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-label>Email ou nom d'utilisateur</mat-label>
+    <input type="text" class="w-full p-2 border border-gray-300 rounded-md mb-4" formControlName="email" required>
+
+    <mat-label>Mot de passe</mat-label>
+    <input type="password" class="w-full p-2 border border-gray-300 rounded-md mb-4" formControlName="password" required>
+
+    <div class="flex flex-col items-center justify-center">
+      <app-plain-button type="submit" [disabled]="form.invalid" [textButton]="'Se connecter'"></app-plain-button>
+    </div>
+  </form>
+
+
+</div>
+
