@@ -1,3 +1,5 @@
+<script
+  src="../../../../../../../Developpez-le-back-end-en-utilisant-Java-et-Spring/front/src/app/services/session.service.ts"></script>
 <nav class="hidden md:flex md:w-full">
   <div class="w-full flex flex-col px-4 py-2 text-black md:h-[94px]">
     <img ngSrc="assets/logo_p6.png" alt="Logo" height="140" width="81">
@@ -25,6 +27,8 @@
     <div class="flex flex-col items-center justify-center">
       <app-plain-button type="submit" [disabled]="form.invalid" [textButton]="'Se connecter'"></app-plain-button>
     </div>
+
+    <span *ngIf="onError" class="flex justify-center mt-4 text-red-600">Erreur lors de la connexion.</span>
   </form>
 
 
