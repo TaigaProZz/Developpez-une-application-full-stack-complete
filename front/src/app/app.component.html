@@ -1,1 +1,3 @@
+<app-navbar *ngIf="displayNavbar()" class="hidden md:block"></app-navbar>
+<app-burger-menu *ngIf="displayNavbar()" class="md:hidden"></app-burger-menu>
 <router-outlet></router-outlet>
