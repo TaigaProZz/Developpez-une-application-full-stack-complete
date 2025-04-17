@@ -2,6 +2,7 @@ import {BehaviorSubject, Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {LoginRequestInterface} from "../interfaces/login/login-request.interface";
 import {Injectable} from "@angular/core";
+import {RegisterRequestInterface} from "../interfaces/register/register-request.interface";
 
 @Injectable( {
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class AuthService {
         localStorage.setItem('token', response);
       })
     );
+  }
+
+  public register(registerRequestInterface: RegisterRequestInterface): Observable<void> {
+    return this.httpClient.post<void>('api/auth/register', registerRequestInterface);
   }
 }

@@ -15,19 +15,35 @@
     <h1>Inscription</h1>
   </div>
 
-  <ng-form class="max-w-[250px]" (ngSubmit)="onSubmit()">
+  <form class="max-w-[250px]" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="text-red-600" *ngIf="form.controls.username.touched && form.controls.username.invalid">
+      <small *ngIf="form.controls.username.errors?.['required']">Le nom d'utilisateur est requis.</small>
+      <small *ngIf="form.controls.username.errors?.['minlength']">Le nom d'utilisateur doit comporter au moins 3 caractères.</small>
+    </div>
     <mat-label>Nom d'utilisateur</mat-label>
-    <input type="email" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+    <input type="text" class="w-full p-2 border border-gray-300 rounded-md mb-4" formControlName="username" required>
 
+
+    <div class="text-red-600" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+      <small *ngIf="form.controls.email.errors?.['required']">L'adresse e-mail est requise.</small>
+      <small *ngIf="form.controls.email.errors?.['email']">L'adresse e-mail doit être valide.</small>
+    </div>
     <mat-label>Adresse e-mail</mat-label>
-    <input type="email" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+    <input type="email" class="w-full p-2 border border-gray-300 rounded-md mb-4" formControlName="email" required>
 
+    <div class="text-red-600" *ngIf="form.controls.password.touched && form.controls.password.invalid">
+      <small *ngIf="form.controls.password.errors?.['required']">Le mot de passe est requis.</small>
+      <small *ngIf="form.controls.password.errors?.['minlength']">Le mot de passe doit comporter au moins 8 caractères.</small>
+      <small *ngIf="form.controls.password.errors?.['pattern']">Le mot de passe doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule et un caractère spécial.</small>
+    </div>
     <mat-label>Mot de passe</mat-label>
-    <input type="password" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+    <input type="password" class="w-full p-2 border border-gray-300 rounded-md mb-4" formControlName="password" required>
 
     <div class="flex flex-col items-center justify-center">
-      <app-plain-button type="submit" [textButton]="'S\'inscrire'"></app-plain-button>
+      <app-plain-button type="submit" [disabled]="form.invalid" [textButton]="'S\'inscrire'"></app-plain-button>
     </div>
-  </ng-form>
+    <span *ngIf="onError" class="flex justify-center mt-4 text-red-600">Erreur lors de la connexion.</span>
+    <span *ngIf="onSuccess" class="flex flex-col text-center justify-center mt-4 text-green-500">
+      Compte crée avec succès. <p routerLink="login" class="underline">Connectez vous en cliquant ici.</p></span>
+  </form>
 </div>
-
