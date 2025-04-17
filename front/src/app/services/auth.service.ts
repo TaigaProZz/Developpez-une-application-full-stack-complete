@@ -43,4 +43,10 @@ export class AuthService {
       })
     );
   }
+
+  public logout(): void {
+    this.isLogged = false;
+    this.isLoggedSubject.next(this.isLogged);
+    localStorage.removeItem('token');
+  }
 }

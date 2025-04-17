@@ -1,4 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-burger-menu',
@@ -7,13 +9,18 @@ import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 })
 export class BurgerMenuComponent implements OnInit {
   public isOpen = false;
-  constructor() { }
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    ) { }
 
   ngOnInit(): void {
   }
 
   public logout() {
-    console.log("Logout clicked");
+    this.authService.logout()
+    this.router.navigate(['/']);
   }
 
   toggleMenu() {
