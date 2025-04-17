@@ -15,9 +15,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {BurgerMenuComponent} from "./layout/burger-menu/burger-menu.component";
+import {NavbarComponent} from "./layout/navbar/navbar.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent,  PlainButtonComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
