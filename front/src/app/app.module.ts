@@ -17,6 +17,7 @@ import { PlainButtonComponent } from './component/plain-button/plain-button.comp
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, NavbarComponent, BurgerMenuComponent, PlainButtonComponent],
@@ -31,7 +32,8 @@ import {HttpClientModule} from "@angular/common/http";
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSidenavModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
