@@ -43,6 +43,7 @@
       <app-plain-button type="submit" [disabled]="form.invalid" [textButton]="'S\'inscrire'"></app-plain-button>
     </div>
     <span *ngIf="onError" class="flex justify-center mt-4 text-red-600">Erreur lors de la connexion.</span>
+    <span *ngIf="errorMessage" class="flex justify-center mt-4 text-red-600">{{ errorMessage }}</span>
     <span *ngIf="onSuccess" class="flex flex-col text-center justify-center mt-4 text-green-500">
       Compte crée avec succès. <p routerLink="login" class="underline">Connectez vous en cliquant ici.</p></span>
   </form>
