@@ -1,0 +1,21 @@
+<nav class="w-full">
+  <div class="flex flex-col">
+    <div class="flex items-center justify-between px-4 py-2 text-black md:h-[94px]">
+      <img src="assets/logo_p6.png" alt="Logo" height="140" width="81">
+      <ul *ngIf="isLoggedIn" class="flex items-center space-x-4">
+        <li><a (click)="logout()" class="hover:underline text-red-700 cursor-pointer">Se déconnecter</a></li>
+        <li><a routerLink="login" routerLinkActive="underline" class="hover:underline divide-purple-500 cursor-pointer">Articles</a></li>
+        <li><a routerLink="themes" routerLinkActive="underline" class="hover:underline cursor-pointer">Thèmes</a></li>
+        <li>
+          <a routerLink="login" routerLinkActive="text-purple-500" class="cursor-pointer">
+            <img ngSrc="/assets/userAvatar.svg" height="48" width="48" alt="user avatar"/>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <mat-divider></mat-divider>
+    </div>
+
+  </div>
+</nav>

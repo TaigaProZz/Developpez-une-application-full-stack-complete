@@ -6,4 +6,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'front';
+
+  public displayNavbar(): boolean {
+    const currentUrl = window.location.pathname;
+    return currentUrl !== '/' && currentUrl !== '/login' && currentUrl !== '/register';
+  }
 }
