@@ -11,12 +11,12 @@ import {RegisterRequestInterface} from "../../interfaces/register/register-reque
 })
 export class RegisterComponent implements OnInit {
   public onError = false;
-  public errorMessage = '';
+  public errorMessage: { field: string; message: string }[] = [];
   public onSuccess = false;
   private passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
   public form = this.formBuilder.group({
-    username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+    username: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.passwordPattern)]],
   });
@@ -40,9 +40,7 @@ export class RegisterComponent implements OnInit {
           },
           error: (error) => {
             this.onError = true;
-            if(error.error && error.error.message) {
-              this.errorMessage = error.error.message;
-            }
+            this.errorMessage = error.error?.errorMessage ?? [];
           }
         }
       );
