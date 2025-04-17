@@ -1,6 +1,8 @@
 package com.openclassrooms.mddapi.auth.service;
 
 import com.openclassrooms.mddapi.auth.dto.LoginDto;
+import com.openclassrooms.mddapi.auth.dto.RegisterDto;
+import com.openclassrooms.mddapi.errors.EmailAlreadyUsedException;
 import com.openclassrooms.mddapi.errors.LoginFailedException;
 import com.openclassrooms.mddapi.user.model.User;
 import com.openclassrooms.mddapi.user.service.UserService;
@@ -40,4 +42,23 @@ public class AuthService {
     // generate token and return it
     return jwtService.generateToken(user.getEmail());
   }
+
+  /**
+   * Registers a new user by saving their details and generating a JWT token.
+   *
+   * @param registerDto An object containing the registration details of the user,
+   *                    including email, password, and name.
+   * @return A JWT token for the successfully registered user.
+   */
+  public String registerUser(RegisterDto registerDto) {
+    // check if email is already used
+    if (this.userService.findUserByEmail(registerDto.getEmail()) != null) {
+      throw new EmailAlreadyUsedException("Email déjà utilisée.");
+    }
+
+    // save user on db and return a token
+    this.userService.saveUser(registerDto);
+    return jwtService.generateToken(registerDto.getEmail());
+  }
+
 }

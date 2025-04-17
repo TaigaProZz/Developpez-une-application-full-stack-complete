@@ -1,11 +1,11 @@
 package com.openclassrooms.mddapi.user.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,7 +17,7 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String email;
-  private String name;
+  private String username;
 
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;

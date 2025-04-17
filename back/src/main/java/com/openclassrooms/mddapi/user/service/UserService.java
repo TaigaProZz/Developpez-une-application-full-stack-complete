@@ -48,4 +48,22 @@ public class UserService {
     // return user if found
     return user;
   }
+
+  /**
+   * Saves a new user based on the registration details provided.
+   * The password is encoded before storing in the database.
+   *
+   * @param registerDto An object containing the registration details of the user,
+   *                    including email, password, and name.
+   */
+  public void saveUser(RegisterDto registerDto) {
+    // bind to user
+    User user = new User();
+    user.setEmail(registerDto.getEmail());
+    user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+    user.setUsername(registerDto.getUsername());
+
+    // and save it in db
+    this.userRepository.save(user);
+  }
 }

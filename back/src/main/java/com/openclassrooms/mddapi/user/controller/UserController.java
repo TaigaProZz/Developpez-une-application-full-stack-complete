@@ -28,7 +28,7 @@ public class UserController {
     GetUserDto getUserDto = new GetUserDto();
     getUserDto.setId(user.getId());
     getUserDto.setEmail(user.getEmail());
-    getUserDto.setName(user.getName());
+    getUserDto.setUsername(user.getUsername());
     getUserDto.setCreated_at(user.getCreatedAt());
     getUserDto.setUpdated_at(user.getUpdatedAt());
 

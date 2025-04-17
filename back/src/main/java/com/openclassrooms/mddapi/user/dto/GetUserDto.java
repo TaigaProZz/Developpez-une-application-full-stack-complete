@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class GetUserDto {
     private Long id;
     private String email;
-    private String name;
+    private String username;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 }
