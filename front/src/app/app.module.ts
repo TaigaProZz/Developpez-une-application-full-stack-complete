@@ -17,9 +17,10 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {BurgerMenuComponent} from "./layout/burger-menu/burger-menu.component";
 import {NavbarComponent} from "./layout/navbar/navbar.component";
+import {RegisterComponent} from "./pages/register/register.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
