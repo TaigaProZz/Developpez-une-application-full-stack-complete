@@ -23,7 +23,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +37,7 @@ export class RegisterComponent implements OnInit {
       this.authService.register(registerRequest).subscribe(
         {
           next: (response) => {
-            this.onSuccess = true;
+            this.router.navigate(["profile"]);
           },
           error: (error) => {
             this.onError = true;
