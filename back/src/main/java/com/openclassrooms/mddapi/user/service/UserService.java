@@ -31,6 +31,17 @@ public class UserService {
     return this.userRepository.findByEmail(email).orElse(null);
   }
 
+    /**
+     * Finds a user by their username.
+     *
+     * @param username The username of the user to be searched.
+     * @return The User object if a user with the given username exists; otherwise, null.
+     */
+    public User findByUsername(String username) {
+        // try to find user by username, or assign null
+        return this.userRepository.findByUsername(username).orElse(null);
+    }
+
   /**
    * Retrieves a user by their unique identifier.
    *

@@ -56,6 +56,10 @@ public class AuthService {
       throw new EmailAlreadyUsedException("Email déjà utilisée.");
     }
 
+    if (this.userService.findByUsername(registerDto.getUsername()) != null) {
+      throw new EmailAlreadyUsedException("Nom d'utilisateur déjà utilisé.");
+    }
+
     // save user on db and return a token
     this.userService.saveUser(registerDto);
     return jwtService.generateToken(registerDto.getEmail());
