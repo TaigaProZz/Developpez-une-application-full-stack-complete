@@ -8,9 +8,6 @@ import {NgOptimizedImage} from "@angular/common";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { NavbarComponent } from './layout/navbar/navbar.component';
-import { BurgerMenuComponent } from './layout/burger-menu/burger-menu.component';
 import {MatDividerModule} from "@angular/material/divider";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { PlainButtonComponent } from './component/plain-button/plain-button.component';
@@ -19,7 +16,7 @@ import {AuthService} from "./services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, NavbarComponent, BurgerMenuComponent, PlainButtonComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent,  PlainButtonComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
