@@ -26,4 +26,15 @@
     Abonnements
   </h2>
 
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 w-full">
+    <app-subscription-card
+      *ngFor="let subscription of subscriptionListMock"
+      [subscription]="subscription"
+      (subscribeId)="handleUnsubscription($event)"
+    >
+    </app-subscription-card>
+  </div>
+
+
+
 </div>

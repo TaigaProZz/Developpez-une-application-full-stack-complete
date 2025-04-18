@@ -1,0 +1,16 @@
+<mat-card class="bg-gray-100">
+  <mat-card-header>
+    <mat-card-title>{{subscription.title}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{subscription.description}}</p>
+  </mat-card-content>
+  <div class="w-full flex justify-center">
+    <app-plain-button
+      [textButton]="'Se désabonner'"
+      (click)="onUnsubscribe()">
+      >
+    </app-plain-button>
+  </div>
+
+</mat-card>

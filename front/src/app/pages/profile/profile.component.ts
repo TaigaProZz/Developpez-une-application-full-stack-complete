@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {LoginRequestInterface} from "../../interfaces/login/login-request.interface";
 import {UpdateUserRequestInterface} from "../../interfaces/user/update-user-request.interface";
 import {UserService} from "../../services/user.service";
+import {ThemeInterface} from "../../interfaces/theme/theme.interface";
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,30 @@ import {UserService} from "../../services/user.service";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+
+  public subscriptionListMock: Array<ThemeInterface> = [
+    {
+      id: 1,
+      title: 'Theme 1',
+      description: 'Description 1',
+    },
+    {
+      id: 2,
+      title: 'Theme 1',
+      description: 'Description 1',
+    },
+    {
+      id: 3,
+      title: 'Theme 1',
+      description: 'Description 1',
+    },
+    {
+      id: 4,
+      title: 'Theme 1',
+      description: 'Description 1',
+    },
+  ];
+
   public user: any;
 
   private passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
@@ -40,7 +65,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-
   public onSubmit(): void {
     if (this.form.valid) {
       const loginRequest = this.form.value as UpdateUserRequestInterface;
@@ -57,6 +81,10 @@ export class ProfileComponent implements OnInit {
     } else {
       console.error('Form is invalid');
     }
+  }
+
+  public handleUnsubscription(subscriptionId: number): void {
+    console.log(`Unsubscribing from theme with ID: ${subscriptionId}`);
   }
 
 }
