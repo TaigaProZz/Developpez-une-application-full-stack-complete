@@ -22,7 +22,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
