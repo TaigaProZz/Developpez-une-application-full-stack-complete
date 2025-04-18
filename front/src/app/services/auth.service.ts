@@ -5,12 +5,14 @@ import {RegisterRequestInterface} from "../interfaces/register/register-request.
 import {Injectable} from "@angular/core";
 import {LoginResponseInterface} from "../interfaces/login/login-response.interface";
 import {RegisterResponseInterface} from "../interfaces/register/register-response.interface";
+import {UserInterface} from "../interfaces/user/user.interface";
 
 @Injectable( {
   providedIn: 'root'
 })
 export class AuthService {
   public isLogged = false;
+  public user: UserInterface | undefined;
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
 
@@ -20,7 +22,6 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
 
   public login(loginRequestInterface: LoginRequestInterface): Observable<LoginResponseInterface> {
-
     return this.httpClient.post<LoginResponseInterface>('api/auth/login', loginRequestInterface).pipe(
       tap((response: LoginResponseInterface) => {
         this.isLogged = true;
@@ -48,5 +49,20 @@ export class AuthService {
     this.isLogged = false;
     this.isLoggedSubject.next(this.isLogged);
     localStorage.removeItem('token');
+  }
+
+  public heartbeat(): Observable<UserInterface> {
+    return this.httpClient.get<UserInterface>('api/auth/me').pipe(
+      tap(() => {
+        this.isLogged = true;
+        this.isLoggedSubject.next(this.isLogged);
+      })
+    );
+  }
+
+  public setLoginStatus(user: UserInterface): void {
+    this.user = user;
+    this.isLogged = true;
+    this.isLoggedSubject.next(this.isLogged);
   }
 }

@@ -13,11 +13,13 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import { PlainButtonComponent } from './component/plain-button/plain-button.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./services/auth.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {BurgerMenuComponent} from "./layout/burger-menu/burger-menu.component";
 import {NavbarComponent} from "./layout/navbar/navbar.component";
 import {RegisterComponent} from "./pages/register/register.component";
+import { ProfileComponent } from './pages/profile/profile.component';
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent],
@@ -35,7 +37,13 @@ import {RegisterComponent} from "./pages/register/register.component";
     HttpClientModule,
     MatSidenavModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
