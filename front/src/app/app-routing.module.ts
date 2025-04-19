@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import {LoginComponent} from "./pages/login/login.component";
 import {RegisterComponent} from "./pages/register/register.component";
-//import {ProfileComponent} from "./pages/profile/profile.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
 import {AuthGuard} from "./guards/auth-guard";
 import {GuestGuard} from "./guards/guest-guard";
 
@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [GuestGuard] },
   { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [GuestGuard]},
-  //{ path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

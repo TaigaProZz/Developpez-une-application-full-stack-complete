@@ -20,9 +20,11 @@ import {NavbarComponent} from "./layout/navbar/navbar.component";
 import {RegisterComponent} from "./pages/register/register.component";
 import { ProfileComponent } from './pages/profile/profile.component';
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import { SubscriptionCardComponent } from './component/subscription-card/subscription-card.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent, SubscriptionCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,7 +37,8 @@ import {JwtInterceptor} from "./interceptors/jwt.interceptor";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatCardModule
   ],
   providers: [
     AuthService,
