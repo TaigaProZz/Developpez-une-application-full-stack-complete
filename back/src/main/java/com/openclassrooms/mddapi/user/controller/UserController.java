@@ -1,13 +1,15 @@
 package com.openclassrooms.mddapi.user.controller;
 
 import com.openclassrooms.mddapi.user.dto.GetUserDto;
+import com.openclassrooms.mddapi.user.dto.UpdateUserDto;
 import com.openclassrooms.mddapi.user.model.User;
+import com.openclassrooms.mddapi.user.repository.UserRepository;
 import com.openclassrooms.mddapi.user.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -34,5 +36,10 @@ public class UserController {
 
     // and return it
     return ResponseEntity.ok(getUserDto);
+  }
+
+  @PutMapping()
+  public ResponseEntity<GetUserDto> updateUser(@RequestBody @Valid UpdateUserDto updateUserDto, @AuthenticationPrincipal UserDetails currentUser) {
+    return ResponseEntity.ok(userService.updateUser(updateUserDto, currentUser));
   }
 }

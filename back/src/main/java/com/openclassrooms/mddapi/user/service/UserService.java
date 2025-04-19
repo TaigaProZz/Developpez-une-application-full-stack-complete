@@ -1,10 +1,14 @@
 package com.openclassrooms.mddapi.user.service;
 
 import com.openclassrooms.mddapi.auth.dto.RegisterDto;
+import com.openclassrooms.mddapi.errors.EmailAlreadyUsedException;
 import com.openclassrooms.mddapi.errors.UserNotFoundException;
+import com.openclassrooms.mddapi.user.dto.GetUserDto;
+import com.openclassrooms.mddapi.user.dto.UpdateUserDto;
 import com.openclassrooms.mddapi.user.model.User;
 import com.openclassrooms.mddapi.user.repository.UserRepository;
 import lombok.Data;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -77,4 +81,56 @@ public class UserService {
     // and save it in db
     this.userRepository.save(user);
   }
+
+  /**
+   * Updates the user information in the database.
+   * @param updateUserDto The DTO containing the updated user information.
+   * @param currentUser The currently authenticated user.
+   *
+   */
+  public GetUserDto updateUser(UpdateUserDto updateUserDto, UserDetails currentUser) {
+    // find the user by email
+    User user = this.userRepository.findByEmail(currentUser.getUsername()).orElse(null);
+    // check if user is valid
+    if (user == null) {
+        throw new UserNotFoundException("Utilisateur introuvable.");
+    }
+    // check if username is already used
+    if (!user.getUsername().equals(updateUserDto.getUsername()) &&
+      userRepository.findByUsername(updateUserDto.getUsername()).isPresent()) {
+      throw new EmailAlreadyUsedException("Nom d'utilisateur déjà utilisé.");
+    }
+
+    // check if email is already used
+    if (!user.getEmail().equals(updateUserDto.getEmail()) &&
+      userRepository.findByEmail(updateUserDto.getEmail()).isPresent()) {
+      throw new EmailAlreadyUsedException("Email déjà utilisé.");
+    }
+
+    // update user information
+    user.setUsername(updateUserDto.getUsername());
+    user.setEmail(updateUserDto.getEmail());
+    if (updateUserDto.getPassword() != null && !updateUserDto.getPassword().isBlank()) {
+      String pwd = updateUserDto.getPassword();
+      if (pwd.length() < 8 ||
+              !pwd.matches(".*[A-Z].*") ||
+              !pwd.matches(".*[a-z].*") ||
+              !pwd.matches(".*\\d.*") ||
+              !pwd.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+        throw new IllegalArgumentException("Le mot de passe ne respecte pas les critères de sécurité.");
+      }
+
+      user.setPassword(passwordEncoder.encode(pwd));
+    }
+    this.userRepository.save(user);
+
+    GetUserDto getUserDto = new GetUserDto();
+    getUserDto.setId(user.getId());
+    getUserDto.setEmail(user.getEmail());
+    getUserDto.setUsername(user.getUsername());
+    getUserDto.setCreated_at(user.getCreatedAt());
+    getUserDto.setUpdated_at(user.getUpdatedAt());
+    return getUserDto;
+  }
+
 }

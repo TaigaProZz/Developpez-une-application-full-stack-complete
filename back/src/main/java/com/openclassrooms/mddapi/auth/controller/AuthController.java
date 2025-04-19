@@ -4,9 +4,12 @@ import com.openclassrooms.mddapi.auth.dto.LoginDto;
 import com.openclassrooms.mddapi.auth.dto.RegisterDto;
 import com.openclassrooms.mddapi.auth.dto.TokenDto;
 import com.openclassrooms.mddapi.auth.service.AuthService;
+import com.openclassrooms.mddapi.user.dto.GetUserDto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -30,5 +33,13 @@ public class AuthController {
     // save user and get the token
     String token = authService.registerUser(registerDto);
     return ResponseEntity.ok(new TokenDto(token));
+  }
+
+  // return authenticated user infos
+  @GetMapping("/me")
+  public ResponseEntity<GetUserDto> me(Principal principal) {
+    // get user infos
+    GetUserDto getUserDto = authService.me(principal);
+    return ResponseEntity.ok(getUserDto);
   }
 }

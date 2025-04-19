@@ -4,11 +4,14 @@ import com.openclassrooms.mddapi.auth.dto.LoginDto;
 import com.openclassrooms.mddapi.auth.dto.RegisterDto;
 import com.openclassrooms.mddapi.errors.EmailAlreadyUsedException;
 import com.openclassrooms.mddapi.errors.LoginFailedException;
+import com.openclassrooms.mddapi.errors.UserNotFoundException;
+import com.openclassrooms.mddapi.user.dto.GetUserDto;
 import com.openclassrooms.mddapi.user.model.User;
 import com.openclassrooms.mddapi.user.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 
 
 @Service
@@ -63,6 +66,34 @@ public class AuthService {
     // save user on db and return a token
     this.userService.saveUser(registerDto);
     return jwtService.generateToken(registerDto.getEmail());
+  }
+
+  /**
+   * Retrieves the currently logged-in user's details based on the provided {@link Principal}.
+   * The method fetches the user from the database using their email, which is derived from the principal.
+   * If the user is found, their details are mapped into a {@link GetUserDto}.
+   *
+   * @param principal The security principal representing the currently authenticated user,
+   *                  containing their authentication details such as email.
+   * @return A {@link GetUserDto} object containing the details of the currently logged-in user,
+   *         including their ID, email, name, creation timestamp, and last updated timestamp.
+   * @throws UserNotFoundException If no user is found in the database with the email obtained from the principal.
+   */
+  public GetUserDto me(Principal principal) {
+    // get current user and check if user is valid
+    User user = userService.findUserByEmail(principal.getName());
+    if (user == null) {
+      throw new UserNotFoundException("Utilisateur introuvable.");
+    }
+
+    // map to dto
+    GetUserDto getUserDto = new GetUserDto();
+    getUserDto.setId(user.getId());
+    getUserDto.setEmail(user.getEmail());
+    getUserDto.setUsername(user.getUsername());
+    getUserDto.setCreated_at(user.getCreatedAt());
+    getUserDto.setUpdated_at(user.getUpdatedAt());
+    return getUserDto;
   }
 
 }
