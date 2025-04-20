@@ -22,9 +22,10 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import { SubscriptionCardComponent } from './component/subscription-card/subscription-card.component';
 import {MatCardModule} from "@angular/material/card";
+import { ThemesComponent } from './pages/themes/themes.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent, SubscriptionCardComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent, SubscriptionCardComponent, ThemesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
