@@ -8,13 +8,14 @@ import {ThemeInterface} from "../../interfaces/theme/theme.interface";
 })
 export class SubscriptionCardComponent implements OnInit {
   @Input() subscription!: ThemeInterface
+  @Input() buttonText!: string;
   @Output() subscribeId = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnInit(): void {}
 
-  public onUnsubscribe(): void {
+  public onButtonClick(): void {
     this.subscribeId.emit(this.subscription.id);
   }
 

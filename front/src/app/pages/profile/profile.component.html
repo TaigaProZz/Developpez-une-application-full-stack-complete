@@ -31,6 +31,7 @@
       *ngFor="let subscription of subscriptionListMock"
       [subscription]="subscription"
       (subscribeId)="handleUnsubscription($event)"
+      [buttonText]="'Se désabonner'"
     >
     </app-subscription-card>
   </div>
