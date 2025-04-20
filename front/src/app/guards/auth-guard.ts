@@ -18,7 +18,6 @@ export class AuthGuard implements CanActivate {
 
     return this.authService.heartbeat().pipe(
       map(user => {
-        this.authService.setLoginStatus(user);
         return true;
       }),
       catchError(() => {

@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {LoginRequestInterface} from "../../interfaces/login/login-request.interface";
 import {UpdateUserRequestInterface} from "../../interfaces/user/update-user-request.interface";
 import {UserService} from "../../services/user.service";
 import {ThemeInterface} from "../../interfaces/theme/theme.interface";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
 
   public subscriptionListMock: Array<ThemeInterface> = [
     {
@@ -36,7 +38,7 @@ export class ProfileComponent implements OnInit {
     },
   ];
 
-  public user: any;
+
 
   private passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
@@ -53,16 +55,20 @@ export class ProfileComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.user = this.authService.user;
+    this.authService.$user().subscribe(user => {
+      if (user) {
+        this.form.patchValue({
+          username: user.username,
+          email: user.email,
+          password: ''
+        });
+      }
+    });
+  }
 
-    // autofill the form with user data
-    if (this.user) {
-      this.form.patchValue({
-        username: this.user.username,
-        email: this.user.email,
-        password: ''
-      });
-    }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public onSubmit(): void {
