@@ -1,11 +1,12 @@
 package com.openclassrooms.mddapi.theme.controller;
 
 import com.openclassrooms.mddapi.theme.dto.GetAllThemesDto;
+import com.openclassrooms.mddapi.theme.dto.SubscribingThemeDto;
 import com.openclassrooms.mddapi.theme.service.ThemeService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @RestController
@@ -21,5 +22,17 @@ public class ThemeController {
     public ResponseEntity<GetAllThemesDto> getAllThemes() {
         GetAllThemesDto themes = this.themeService.getAllThemes();
         return ResponseEntity.ok(themes);
+    }
+
+    @GetMapping("/subscribe")
+    public ResponseEntity<GetAllThemesDto> getSubscribedThemes(Principal principal) {
+        GetAllThemesDto themes = this.themeService.getSubscribedThemes(principal);
+        return ResponseEntity.ok(themes);
+    }
+
+    @PostMapping("/subscribe/{themeId}")
+    public ResponseEntity<SubscribingThemeDto> subscribeToTheme(@PathVariable Long themeId, Principal principal) {
+        this.themeService.subscribeToTheme(themeId, principal);
+        return ResponseEntity.ok(new SubscribingThemeDto("You have successfully subscribed to the theme."));
     }
 }

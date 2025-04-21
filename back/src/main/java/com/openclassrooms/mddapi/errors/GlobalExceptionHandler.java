@@ -77,4 +77,10 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.CONFLICT);
   }
 
+  @ExceptionHandler(UserAlreadySubscribedException.class)
+    public ResponseEntity<?> handleUserAlreadySubscribedException(UserAlreadySubscribedException e) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+  }
+
+
 }
