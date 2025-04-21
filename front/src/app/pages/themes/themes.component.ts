@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ThemeService} from "../../services/theme.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-themes',
@@ -7,16 +8,24 @@ import {ThemeService} from "../../services/theme.service";
   styleUrls: ['./themes.component.css']
 })
 export class ThemesComponent implements OnInit {
-  public subscriptionList = this.themeService.getAllThemes()
+  subscriptionList = this.themeService.getAllThemes();
 
   constructor(
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
   }
 
   handleSubscription($id: number) {
-    console.log('id', $id);
+    this.themeService.subscribeToTheme($id).subscribe({
+      next: (response) => {
+         this.snackBar.open('Subscribe réussi', 'Fermer', {});
+      },
+      error: (error) => {
+        this.snackBar.open('Erreur, veuillez réessayer', 'Fermer', {});
+      }
+    })
   }
 }

@@ -23,6 +23,7 @@ import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import { SubscriptionCardComponent } from './component/subscription-card/subscription-card.component';
 import {MatCardModule} from "@angular/material/card";
 import { ThemesComponent } from './pages/themes/themes.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent, SubscriptionCardComponent, ThemesComponent],
@@ -39,7 +40,8 @@ import { ThemesComponent } from './pages/themes/themes.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatSidenavModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule
   ],
   providers: [
     AuthService,

@@ -13,4 +13,8 @@ export class ThemeService {
   public getAllThemes(): Observable<GetAllThemeResponseInterface> {
     return this.httpClient.get<GetAllThemeResponseInterface>('api/theme/all');
   }
+
+  public subscribeToTheme(themeId: number): Observable<any> {
+    return this.httpClient.post(`api/theme/subscribe/${themeId}`, {});
+  }
 }
