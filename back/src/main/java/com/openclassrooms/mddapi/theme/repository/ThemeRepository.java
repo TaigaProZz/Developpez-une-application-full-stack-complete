@@ -20,4 +20,9 @@ public interface ThemeRepository extends CrudRepository<Theme, Long> {
 
     @Query("SELECT t FROM Theme t JOIN t.users u WHERE u.id = :userId")
     List<Theme> findSubscribedThemesByUserId(@Param("userId") Long userId);
+
+    // delete user from theme
+    @Modifying
+    @Query(value = "DELETE FROM user_themes WHERE user_id = :userId AND theme_id = :themeId", nativeQuery = true)
+    void deleteUserFromTheme(@Param("userId") Long userId, @Param("themeId") Long themeId);
 }

@@ -10,6 +10,7 @@ import com.openclassrooms.mddapi.user.repository.UserRepository;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class ThemeService {
         return new GetAllThemesDto(themesDto);
     }
 
+    @Transactional
     public void subscribeToTheme(Long themeId, Principal principal) {
         String email = principal.getName();
         User user = userRepository.findByEmail(email)
@@ -63,5 +65,20 @@ public class ThemeService {
         }
 
         return new GetAllThemesDto(themesDto);
+    }
+
+    @Transactional
+    public void unsubscribeFromTheme(Long themeId, Principal principal) {
+        String email = principal.getName();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+
+        Theme theme = themeRepository.findById(themeId)
+                .orElseThrow(() -> new UsernameNotFoundException("Thème non trouvé"));
+
+        if (!themeRepository.isUserSubscribedToTheme(user.getId(), theme.getId())) {
+            throw new UserAlreadySubscribedException("L'utilisateur n'est pas abonné à ce thème");
+        }
+        themeRepository.deleteUserFromTheme(user.getId(), theme.getId());
     }
 }

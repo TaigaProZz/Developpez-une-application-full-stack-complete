@@ -14,7 +14,15 @@ export class ThemeService {
     return this.httpClient.get<GetAllThemeResponseInterface>('api/theme/all');
   }
 
+  public getUserSubscribedTheme(): Observable<GetAllThemeResponseInterface> {
+    return this.httpClient.get<GetAllThemeResponseInterface>('api/theme/subscribe');
+  }
+
   public subscribeToTheme(themeId: number): Observable<any> {
     return this.httpClient.post(`api/theme/subscribe/${themeId}`, {});
+  }
+
+  public unsubscribeFromTheme(themeId: number): Observable<any> {
+    return this.httpClient.delete(`api/theme/unsubscribe/${themeId}`);
   }
 }

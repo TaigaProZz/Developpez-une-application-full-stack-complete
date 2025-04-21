@@ -35,4 +35,10 @@ public class ThemeController {
         this.themeService.subscribeToTheme(themeId, principal);
         return ResponseEntity.ok(new SubscribingThemeDto("You have successfully subscribed to the theme."));
     }
+
+    @DeleteMapping("/unsubscribe/{themeId}")
+    public ResponseEntity<SubscribingThemeDto> unsubscribeFromTheme(@PathVariable Long themeId, Principal principal) {
+        this.themeService.unsubscribeFromTheme(themeId, principal);
+        return ResponseEntity.ok(new SubscribingThemeDto("You have successfully unsubscribed from the theme."));
+    }
 }
