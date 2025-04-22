@@ -24,9 +24,11 @@ import { SubscriptionCardComponent } from './component/subscription-card/subscri
 import {MatCardModule} from "@angular/material/card";
 import { ThemesComponent } from './pages/themes/themes.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { CreateArticleComponent } from './pages/create-article/create-article.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent, SubscriptionCardComponent, ThemesComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent, SubscriptionCardComponent, ThemesComponent, CreateArticleComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,7 +43,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     HttpClientModule,
     MatSidenavModule,
     MatCardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule
   ],
   providers: [
     AuthService,
