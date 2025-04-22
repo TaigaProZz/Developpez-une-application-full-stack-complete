@@ -12,37 +12,36 @@
 
   <div class="w-full flex flex-col items-center justify-center">
     <img ngSrc="assets/logo_p6.png" alt="Logo" class="md:hidden" height="401" width="695">
-    <h1>Inscription</h1>
+    <h1>{{ registerTextsConstants.REGISTER_TITLE }}</h1>
   </div>
 
   <form class="max-w-[250px]" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="text-red-600" *ngIf="form.controls.username.touched && form.controls.username.invalid">
-      <small *ngIf="form.controls.username.errors?.['required']">Le nom d'utilisateur est requis.</small>
-      <small *ngIf="form.controls.username.errors?.['minlength']">Le nom d'utilisateur doit comporter au moins 3 caractères.</small>
+      <small *ngIf="form.controls.username.errors?.['required']">{{ formControlTextsConstants.USERNAME_REQUIRED }}</small>
+      <small *ngIf="form.controls.username.errors?.['minlength']">{{ formControlTextsConstants.USERNAME_LENGTH_MIN }}</small>
     </div>
-    <mat-label>Nom d'utilisateur</mat-label>
+    <mat-label>{{registerTextsConstants.USERNAME_LABEL}}</mat-label>
     <input type="text" class="w-full p-2 border border-gray-300 rounded-md mb-4" formControlName="username" required>
 
 
     <div class="text-red-600" *ngIf="form.controls.email.touched && form.controls.email.invalid">
-      <small *ngIf="form.controls.email.errors?.['required']">L'adresse e-mail est requise.</small>
-      <small *ngIf="form.controls.email.errors?.['email']">L'adresse e-mail doit être valide.</small>
+      <small *ngIf="form.controls.email.errors?.['required']">{{ formControlTextsConstants.EMAIL_REQUIRED }}</small>
+      <small *ngIf="form.controls.email.errors?.['email']">{{ formControlTextsConstants.EMAIL_INVALID }}</small>
     </div>
-    <mat-label>Adresse e-mail</mat-label>
+    <mat-label>{{ registerTextsConstants.EMAIL_LABEL }}</mat-label>
     <input type="email" class="w-full p-2 border border-gray-300 rounded-md mb-4" formControlName="email" required>
 
     <div class="text-red-600" *ngIf="form.controls.password.touched && form.controls.password.invalid">
-      <small *ngIf="form.controls.password.errors?.['required']">Le mot de passe est requis.</small>
-      <small *ngIf="form.controls.password.errors?.['minlength']">Le mot de passe doit comporter au moins 8 caractères.</small>
-      <small *ngIf="form.controls.password.errors?.['pattern']">Le mot de passe doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule et un caractère spécial.</small>
+      <small *ngIf="form.controls.password.errors?.['required']">{{formControlTextsConstants.PASSWORD_REQUIRED}}</small>
+      <small *ngIf="form.controls.password.errors?.['minlength']">{{formControlTextsConstants.PASSWORD_LENGTH_MIN}}</small>
+      <small *ngIf="form.controls.password.errors?.['pattern']">{{formControlTextsConstants.PASSWORD_PATTERN}}.</small>
     </div>
-    <mat-label>Mot de passe</mat-label>
+    <mat-label>{{registerTextsConstants.PASSWORD_LABEL}}</mat-label>
     <input type="password" class="w-full p-2 border border-gray-300 rounded-md mb-4" formControlName="password" required>
 
     <div class="flex flex-col items-center justify-center">
-      <app-plain-button type="submit" [disabled]="form.invalid" [textButton]="'S\'inscrire'"></app-plain-button>
+      <app-plain-button type="submit" [disabled]="form.invalid" [textButton]=registerTextsConstants.REGISTER_BUTTON></app-plain-button>
     </div>
-    <span *ngIf="onError" class="flex justify-center mt-4 text-red-600">Erreur lors de l'inscription.</span>
     <ul *ngIf="errorMessage.length > 0" class="flex justify-center text-red-600 text-sm">
       <li *ngFor="let err of errorMessage">
         {{ err.message }}

@@ -3,6 +3,9 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {RegisterRequestInterface} from "../../interfaces/register/register-request.interface";
+import {registerTextsConstants} from "../../const/REGISTER_TEXTS";
+import {formControlTextsConstants} from "../../const/FORM_CONTROL_TEXTS";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-register',
@@ -10,7 +13,6 @@ import {RegisterRequestInterface} from "../../interfaces/register/register-reque
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  public onError = false;
   public errorMessage: { field: string; message: string }[] = [];
   private passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
@@ -23,7 +25,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -36,18 +39,22 @@ export class RegisterComponent implements OnInit {
       this.authService.register(registerRequest).subscribe(
         {
           next: (response) => {
-            this.onError = false;
             this.errorMessage = [];
             this.router.navigate(["profile"]);
           },
           error: (error) => {
-            this.onError = true;
             this.errorMessage = error.error?.errorMessage ?? [];
+            if (this.errorMessage.length < 0) {
+              this.snackBar.open(registerTextsConstants.REGISTER_ERROR_SNACKBAR, registerTextsConstants.REGISTER_SNACKBAR_BUTTON, {})
+            }
           }
         }
       );
     } else {
-      console.log('Form is invalid');
+      this.snackBar.open(registerTextsConstants.REGISTER_ERROR_SNACKBAR, registerTextsConstants.REGISTER_SNACKBAR_BUTTON, {})
     }
   }
+
+  protected readonly registerTextsConstants = registerTextsConstants;
+  protected readonly formControlTextsConstants = formControlTextsConstants;
 }
