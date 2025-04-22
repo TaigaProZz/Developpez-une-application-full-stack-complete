@@ -1,0 +1,11 @@
+/*border for input and textarea with tailwind*/
+@tailwind components;
+
+@layer components {
+  .input {
+    @apply border-2 border-blue-300 rounded-md p-2;
+  }
+  .textarea {
+    @apply border-2 border-gray-300 rounded-md p-2;
+  }
+}

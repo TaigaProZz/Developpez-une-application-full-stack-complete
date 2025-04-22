@@ -1,0 +1,42 @@
+<div class="p-4 flex flex-col items-center justify-center">
+  <a routerLink="/feed" class="cursor-pointer self-start">
+    <p class="text-5xl">←</p>
+  </a>
+
+  <!--  title -->
+  <div class="w-full flex flex-col items-center justify-center">
+    <h1>{{ createArticleTextsConstants.CREATE_ARTICLE_TITLE }}</h1>
+  </div>
+
+  <form class="max-w-[250px] w-full flex flex-col justify-center gap-3 mt-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- theme -->
+    <div class="text-red-600" *ngIf="form.controls.themeSelected.touched && form.controls.themeSelected.invalid">
+      <small *ngIf="form.controls.themeSelected.errors?.['required']">{{ formControlTextsConstants.THEME_REQUIRED }}</small>
+    </div>
+    <select formControlName="themeSelected" class="w-full border-2 border-purplePrimary rounded-md p-2" required>
+      <option value="" disabled selected>{{ createArticleTextsConstants.FORM_SELECT_THEME_PLACEHOLDER }}</option>
+      <option *ngFor="let theme of (themes | async)?.themes" [value]="theme.id">{{ theme.title }}</option>
+    </select>
+
+    <!-- title input-->
+    <div class="text-red-600" *ngIf="form.controls.title.touched && form.controls.content.invalid">
+      <small *ngIf="form.controls.title.errors?.['required']">{{ formControlTextsConstants.TITLE_REQUIRED }}</small>
+      <small *ngIf="form.controls.title.errors?.['minlength']">{{ formControlTextsConstants.TITLE_LENGTH_MIN }}</small>
+      <small *ngIf="form.controls.title.errors?.['maxlength']">{{ formControlTextsConstants.TITLE_LENGTH_MAX }}</small>
+    </div>
+    <input type="text" class="border-2 border-purplePrimary rounded-md p-2" formControlName="title" [placeholder]="createArticleTextsConstants.FORM_TITLE_PLACEHOLDER" required>
+
+    <!-- content textarea-->
+    <div class="text-red-600" *ngIf="form.controls.content.touched && form.controls.content.invalid">
+      <small *ngIf="form.controls.content.errors?.['required']">{{ formControlTextsConstants.CONTENT_REQUIRED }}</small>
+      <small *ngIf="form.controls.content.errors?.['minlength']">{{ formControlTextsConstants.CONTENT_LENGTH_MIN }}</small>
+      <small *ngIf="form.controls.content.errors?.['maxlength']">{{ formControlTextsConstants.CONTENT_LENGTH_MAX }}</small>
+    </div>
+    <textarea class="w-full border-2 border-purplePrimary rounded-md p-2 min-h-[212px] resize-none mb-4" formControlName="content" [placeholder]="createArticleTextsConstants.FORM_CONTENT_PLACEHOLDER" required></textarea>
+
+    <!-- submit button -->
+    <div class="flex flex-col items-center justify-center">
+      <app-plain-button type="submit" [disabled]="form.invalid" [textButton]=createArticleTextsConstants.CREATE_ARTICLE_FORM_BUTTON></app-plain-button>
+    </div>
+  </form>
+</div>
