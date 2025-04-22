@@ -37,7 +37,7 @@ export class ThemesComponent implements OnInit {
 
   handleSubscription(themeId: number): void {
     if (this.isSubscribed(themeId)) {
-      this.themeService.unsubscribeFromTheme(themeId).subscribe({
+      this.themeService.unsubscribeFromTheme(themeId.toString()).subscribe({
         next: () => {
           this.subscribedThemes = this.subscribedThemes.filter(id => id !== themeId);
           this.snackBar.open('Désabonnement réussi', 'Fermer', { duration: 3000 });
@@ -47,7 +47,7 @@ export class ThemesComponent implements OnInit {
         }
       });
     } else {
-      this.themeService.subscribeToTheme(themeId).subscribe({
+      this.themeService.subscribeToTheme(themeId.toString()).subscribe({
         next: () => {
           this.subscribedThemes.push(themeId);
           this.snackBar.open('Abonnement réussi', 'Fermer', { duration: 3000 });

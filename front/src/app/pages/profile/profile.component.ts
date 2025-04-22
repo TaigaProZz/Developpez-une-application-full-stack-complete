@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public handleUnsubscribe(themeId: number): void {
-    this.themeService.unsubscribeFromTheme(themeId).subscribe({
+    this.themeService.unsubscribeFromTheme(themeId.toString()).subscribe({
       next: () => {
         this.userSubscribedThemes = this.userSubscribedThemes.filter(theme => theme.id !== themeId);
         this.snakeBar.open(profileTextsConstants.HANDLE_UNSUBSCRIBE_THEME_SUCCESS_SNACKBAR, profileTextsConstants.BUTTON_SNACKBAR, {});
