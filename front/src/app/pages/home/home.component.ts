@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {homeTextsConstants} from "../../const/HOME_TEXTS";
 
 @Component({
   selector: 'app-home',
@@ -9,4 +10,6 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  protected readonly homeTextsConstants = homeTextsConstants;
 }
