@@ -3,6 +3,8 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {LoginRequestInterface} from "../../interfaces/login/login-request.interface";
+import {loginTextsConstants} from "../../const/LOGIN_TEXTS";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -10,8 +12,6 @@ import {LoginRequestInterface} from "../../interfaces/login/login-request.interf
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  public onError = false;
-
   public form = this.formBuilder.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required]]
@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -36,13 +37,14 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/profile']);
           },
           error: (error) => {
-            this.onError = true;
+            this.snackBar.open(loginTextsConstants.ERROR_LOGIN_FAILED, loginTextsConstants.BUTTON_SNACKBAR, {})
           }
         }
       );
     } else {
-      console.log('Form is invalid');
+      this.snackBar.open(loginTextsConstants.ERROR_LOGIN_FAILED, loginTextsConstants.BUTTON_SNACKBAR, {});
     }
   }
 
+    protected readonly loginTextsConstants = loginTextsConstants;
 }
