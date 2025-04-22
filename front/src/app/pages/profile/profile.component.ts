@@ -1,11 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, Validators} from "@angular/forms";
-import {LoginRequestInterface} from "../../interfaces/login/login-request.interface";
 import {UpdateUserRequestInterface} from "../../interfaces/user/update-user-request.interface";
 import {UserService} from "../../services/user.service";
 import {ThemeInterface} from "../../interfaces/theme/theme.interface";
 import {Subject} from "rxjs";
+import {ThemeService} from "../../services/theme.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {profileTextsConstants} from "../../const/PROFILE_TEXTS";
+import {formControlTextsConstants} from "../../const/FORM_CONTROL_TEXTS";
+import {buttonTextsConstants} from "../../const/GLOBAL_BUTTON_TEXTS";
 
 @Component({
   selector: 'app-profile',
@@ -15,30 +19,12 @@ import {Subject} from "rxjs";
 export class ProfileComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  public subscriptionListMock: Array<ThemeInterface> = [
-    {
-      id: 1,
-      title: 'Theme 1',
-      description: 'Description 1',
-    },
-    {
-      id: 2,
-      title: 'Theme 1',
-      description: 'Description 1',
-    },
-    {
-      id: 3,
-      title: 'Theme 1',
-      description: 'Description 1',
-    },
-    {
-      id: 4,
-      title: 'Theme 1',
-      description: 'Description 1',
-    },
-  ];
+  protected readonly profileTextsConstants = profileTextsConstants;
 
+  protected readonly formControlTextsConstants = formControlTextsConstants;
+  protected readonly buttonTextsConstants = buttonTextsConstants;
 
+  public userSubscribedThemes: ThemeInterface[] = [];
 
   private passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
@@ -51,7 +37,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private themeService: ThemeService,
+    private snakeBar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
@@ -63,6 +51,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
           password: ''
         });
       }
+    });
+
+    // get user subscribed themes
+    this.themeService.getUserSubscribedTheme().subscribe(response => {
+      this.userSubscribedThemes = response.themes;
     });
   }
 
@@ -77,20 +70,28 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.userService.updateUser(loginRequest).subscribe(
         {
           next: () => {
-            console.log('User updated successfully');
+            this.snakeBar.open(profileTextsConstants.ON_SUBMIT_UPDATE_USER_SUCCESS_DESCRIPTION_SNACKBAR, profileTextsConstants.BUTTON_SNACKBAR, {});
           },
           error: (error: any) => {
-            console.error('Error updating user', error);
+            this.snakeBar.open(profileTextsConstants.ON_SUBMIT_UPDATE_USER_ERROR_SNACKBAR, profileTextsConstants.BUTTON_SNACKBAR, {});
           }
         }
       );
     } else {
-      console.error('Form is invalid');
+      this.snakeBar.open(profileTextsConstants.ON_SUBMIT_UPDATE_USER_FORM_INVALID_SNACKBAR, profileTextsConstants.BUTTON_SNACKBAR, {});
     }
   }
 
-  public handleUnsubscription(subscriptionId: number): void {
-    console.log(`Unsubscribing from theme with ID: ${subscriptionId}`);
+  public handleUnsubscribe(themeId: number): void {
+    this.themeService.unsubscribeFromTheme(themeId).subscribe({
+      next: () => {
+        this.userSubscribedThemes = this.userSubscribedThemes.filter(theme => theme.id !== themeId);
+        this.snakeBar.open(profileTextsConstants.HANDLE_UNSUBSCRIBE_THEME_SUCCESS_SNACKBAR, profileTextsConstants.BUTTON_SNACKBAR, {});
+      },
+      error: (error: any) => {
+        this.snakeBar.open(profileTextsConstants.HANDLE_UNSUBSCRIBE_THEME_ERROR_SNACKBAR, profileTextsConstants.BUTTON_SNACKBAR, {});
+      }
+    });
   }
 
 }

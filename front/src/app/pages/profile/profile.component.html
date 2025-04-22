@@ -1,20 +1,20 @@
 <div class="flex flex-col items-center justify-center my-6">
   <h1>
-    Profil utilisateur
+    {{ profileTextsConstants.PROFILE_TITLE }}
   </h1>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="max-w-[283px] w-full flex flex-col items-center justify-center gap-4">
     <input type="text" formControlName="username" class="form-input-custom"  required />
     <input type="email"  formControlName="email" class="form-input-custom"  required />
 
     <div class="text-red-600" *ngIf="form.controls.password.touched && form.controls.password.invalid">
-      <small *ngIf="form.controls.password.errors?.['minlength']">Le mot de passe doit comporter au moins 8 caractères.</small>
-      <small *ngIf="form.controls.password.errors?.['pattern']">Le mot de passe doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule et un caractère spécial.</small>
+      <small *ngIf="form.controls.password.errors?.['minlength']">{{ formControlTextsConstants.PASSWORD_LENGTH_MIN  }}</small>
+      <small *ngIf="form.controls.password.errors?.['pattern']">{{ formControlTextsConstants.PASSWORD_PATTERN }}</small>
     </div>
     <input type="password" placeholder="Changez votre mot de passe ici" formControlName="password" class="form-input-custom" />
     <app-plain-button
       type="submit"
       [disabled]="form.invalid"
-      [textButton]="'Sauvegarder'">
+      [textButton]=profileTextsConstants.BUTTON_UPDATE_PROFILE_USER>
     </app-plain-button>
   </form>
 </div>
@@ -23,19 +23,15 @@
 
 <div class="flex flex-col items-center justify-center mt-3">
   <h2>
-    Abonnements
+    {{ profileTextsConstants.PROFILE_SUBTITLE }}
   </h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 w-full">
     <app-subscription-card
-      *ngFor="let subscription of subscriptionListMock"
+      *ngFor="let subscription of userSubscribedThemes"
       [subscription]="subscription"
-      (subscribeId)="handleUnsubscription($event)"
-      [buttonText]="'Se désabonner'"
-    >
+      (subscribeId)="handleUnsubscribe($event)"
+      [buttonText]=buttonTextsConstants.SUBSCRIPTION_CARD_UNSUBSCRIBE>
     </app-subscription-card>
   </div>
-
-
-
 </div>
