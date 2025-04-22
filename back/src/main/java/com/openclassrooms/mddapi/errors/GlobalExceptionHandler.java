@@ -34,8 +34,8 @@ public class GlobalExceptionHandler {
    * @param e the exception instance containing the details of the user not being found
    * @return a {@link ResponseEntity} with HTTP status 404 (NOT_FOUND) and the exception message in the response body
    */
-  @ExceptionHandler(UserNotFoundException.class)
-  public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException e) {
+  @ExceptionHandler(NotFoundException.class)
+  public ResponseEntity<?> handleNotFoundException(NotFoundException e) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
   }
 

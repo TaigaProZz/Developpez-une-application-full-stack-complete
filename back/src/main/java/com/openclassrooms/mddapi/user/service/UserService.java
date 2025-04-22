@@ -2,7 +2,7 @@ package com.openclassrooms.mddapi.user.service;
 
 import com.openclassrooms.mddapi.auth.dto.RegisterDto;
 import com.openclassrooms.mddapi.errors.EmailAlreadyUsedException;
-import com.openclassrooms.mddapi.errors.UserNotFoundException;
+import com.openclassrooms.mddapi.errors.NotFoundException;
 import com.openclassrooms.mddapi.user.dto.GetUserDto;
 import com.openclassrooms.mddapi.user.dto.UpdateUserDto;
 import com.openclassrooms.mddapi.user.model.User;
@@ -51,13 +51,13 @@ public class UserService {
    *
    * @param id The unique identifier of the user to find.
    * @return The User object matching the given identifier.
-   * @throws UserNotFoundException if no user with the specified id is found.
+   * @throws NotFoundException if no user with the specified id is found.
    */
   public User findUserById(Long id) {
     // try to find user by id, and throw error if not found
     User user = this.userRepository.findById(id).orElse(null);
     if (user == null) {
-      throw new UserNotFoundException("Utilisateur introuvable.");
+      throw new NotFoundException("Utilisateur introuvable.");
     }
 
     // return user if found
@@ -93,7 +93,7 @@ public class UserService {
     User user = this.userRepository.findByEmail(currentUser.getUsername()).orElse(null);
     // check if user is valid
     if (user == null) {
-        throw new UserNotFoundException("Utilisateur introuvable.");
+        throw new NotFoundException("Utilisateur introuvable.");
     }
     // check if username is already used
     if (!user.getUsername().equals(updateUserDto.getUsername()) &&

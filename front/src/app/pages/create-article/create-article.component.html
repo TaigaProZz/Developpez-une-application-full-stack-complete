@@ -8,12 +8,12 @@
     <h1>{{ createArticleTextsConstants.CREATE_ARTICLE_TITLE }}</h1>
   </div>
 
-  <form class="max-w-[250px] w-full flex flex-col justify-center gap-3 mt-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form class="max-w-[280px] w-full flex flex-col justify-center gap-3 mt-4" [formGroup]="form" (ngSubmit)="onSubmit()">
     <!-- theme -->
-    <div class="text-red-600" *ngIf="form.controls.themeSelected.touched && form.controls.themeSelected.invalid">
-      <small *ngIf="form.controls.themeSelected.errors?.['required']">{{ formControlTextsConstants.THEME_REQUIRED }}</small>
+    <div class="text-red-600" *ngIf="form.controls.themeId.touched && form.controls.themeId.invalid">
+      <small *ngIf="form.controls.themeId.errors?.['required']">{{ formControlTextsConstants.THEME_REQUIRED }}</small>
     </div>
-    <select formControlName="themeSelected" class="w-full border-2 border-purplePrimary rounded-md p-2" required>
+    <select formControlName="themeId" class="w-full border-2 border-purplePrimary rounded-md p-2" required>
       <option value="" disabled selected>{{ createArticleTextsConstants.FORM_SELECT_THEME_PLACEHOLDER }}</option>
       <option *ngFor="let theme of (themes | async)?.themes" [value]="theme.id">{{ theme.title }}</option>
     </select>

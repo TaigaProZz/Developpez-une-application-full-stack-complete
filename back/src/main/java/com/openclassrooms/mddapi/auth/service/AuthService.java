@@ -4,7 +4,7 @@ import com.openclassrooms.mddapi.auth.dto.LoginDto;
 import com.openclassrooms.mddapi.auth.dto.RegisterDto;
 import com.openclassrooms.mddapi.errors.EmailAlreadyUsedException;
 import com.openclassrooms.mddapi.errors.LoginFailedException;
-import com.openclassrooms.mddapi.errors.UserNotFoundException;
+import com.openclassrooms.mddapi.errors.NotFoundException;
 import com.openclassrooms.mddapi.user.dto.GetUserDto;
 import com.openclassrooms.mddapi.user.model.User;
 import com.openclassrooms.mddapi.user.service.UserService;
@@ -77,13 +77,13 @@ public class AuthService {
    *                  containing their authentication details such as email.
    * @return A {@link GetUserDto} object containing the details of the currently logged-in user,
    *         including their ID, email, name, creation timestamp, and last updated timestamp.
-   * @throws UserNotFoundException If no user is found in the database with the email obtained from the principal.
+   * @throws NotFoundException If no user is found in the database with the email obtained from the principal.
    */
   public GetUserDto me(Principal principal) {
     // get current user and check if user is valid
     User user = userService.findUserByEmail(principal.getName());
     if (user == null) {
-      throw new UserNotFoundException("Utilisateur introuvable.");
+      throw new NotFoundException("Utilisateur introuvable.");
     }
 
     // map to dto

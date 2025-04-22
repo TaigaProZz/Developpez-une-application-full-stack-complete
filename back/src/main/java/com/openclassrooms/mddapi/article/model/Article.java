@@ -1,0 +1,38 @@
+package com.openclassrooms.mddapi.article.model;
+
+import com.openclassrooms.mddapi.theme.model.Theme;
+import com.openclassrooms.mddapi.user.model.User;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+@Table(name = "Articles")
+public class Article {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Size(min = 3, max = 50)
+    private String title;
+
+    @Size(min = 3, max = 255)
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
+    @ManyToOne
+    @JoinColumn(name = "theme_id", nullable = false)
+    private Theme theme;
+
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+}

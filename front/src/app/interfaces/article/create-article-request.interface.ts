@@ -1,5 +1,5 @@
 export interface CreateArticleRequestInterface {
-  themeId: number;
+  themeId: string;
   title: string;
   content: string;
 }

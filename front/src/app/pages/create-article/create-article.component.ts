@@ -16,7 +16,7 @@ export class CreateArticleComponent implements OnInit {
   public themes = this.themeService.getAllThemes()
 
   public form = this.formBuilder.group({
-    themeSelected: ['', [Validators.required]],
+    themeId: ['', [Validators.required]],
     title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     content: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]]
   });
@@ -38,6 +38,7 @@ export class CreateArticleComponent implements OnInit {
         {
           next: (response) => {
             this.snackBar.open(createArticleTextsConstants.SUCCESS_CREATE_ARTICLE, createArticleTextsConstants.BUTTON_SNACKBAR, {});
+            this.form.reset();
           },
           error: (error) => {
             this.snackBar.open(createArticleTextsConstants.ERROR_CREATE_ARTICLE_FAILED, createArticleTextsConstants.BUTTON_SNACKBAR, {})
