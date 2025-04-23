@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.article.service;
 
 import com.openclassrooms.mddapi.article.dto.CreateArticleRequestDto;
 import com.openclassrooms.mddapi.article.dto.CreateArticleResponseDto;
+import com.openclassrooms.mddapi.article.dto.ArticleDto;
 import com.openclassrooms.mddapi.article.model.Article;
 import com.openclassrooms.mddapi.article.repository.ArticleRepository;
 import com.openclassrooms.mddapi.errors.NotFoundException;
@@ -10,9 +11,12 @@ import com.openclassrooms.mddapi.theme.repository.ThemeRepository;
 import com.openclassrooms.mddapi.user.model.User;
 import com.openclassrooms.mddapi.user.repository.UserRepository;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Service
@@ -42,5 +46,22 @@ public class ArticleService {
 
     articleRepository.save(article);
     return new CreateArticleResponseDto("Article created successfully");
+  }
+
+  public List<ArticleDto> getAllArticles() {
+    Iterable<Article> articles = articleRepository.findAll();
+
+    List<ArticleDto> articleDtos = new ArrayList<>();
+    for (Article article : articles) {
+      ArticleDto articleDto = new ArticleDto();
+      articleDto.setId(article.getId());
+      articleDto.setTitle(article.getTitle());
+      articleDto.setContent(article.getContent());
+      articleDto.setAuthorName(article.getAuthor().getUsername());
+      articleDto.setCreatedAt(article.getCreatedAt());
+      articleDtos.add(articleDto);
+    }
+
+    return articleDtos;
   }
 }

@@ -2,15 +2,14 @@ package com.openclassrooms.mddapi.article.controller;
 
 import com.openclassrooms.mddapi.article.dto.CreateArticleRequestDto;
 import com.openclassrooms.mddapi.article.dto.CreateArticleResponseDto;
+import com.openclassrooms.mddapi.article.dto.ArticleDto;
 import com.openclassrooms.mddapi.article.service.ArticleService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/article")
@@ -27,5 +26,13 @@ public class ArticleController {
         CreateArticleResponseDto savedArticle = articleService.createArticle(article, principal);
         // Return the saved article in the response
         return ResponseEntity.ok(savedArticle);
+    }
+
+    @GetMapping()
+    public ResponseEntity< List<ArticleDto>> getAllArticles() {
+        // Get all articles using the service
+        List<ArticleDto> articles = articleService.getAllArticles();
+        // Return the articles in the response
+        return ResponseEntity.ok(articles);
     }
 }

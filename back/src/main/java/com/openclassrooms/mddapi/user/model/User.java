@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.user.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openclassrooms.mddapi.comment.model.Comment;
 import com.openclassrooms.mddapi.theme.model.Theme;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -31,6 +32,9 @@ public class User {
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "theme_id"))
   private Set<Theme> themes = new HashSet<>();
+
+  @OneToMany(mappedBy = "user")
+  private Set<Comment> comments = new HashSet<>();
 
   @Column(name = "created_at", updatable = false)
   @CreationTimestamp

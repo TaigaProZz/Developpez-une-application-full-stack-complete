@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.theme.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.openclassrooms.mddapi.article.model.Article;
 import com.openclassrooms.mddapi.user.model.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,4 +23,7 @@ public class Theme {
 
     @ManyToMany(mappedBy = "themes")
     private Set<User> users = new HashSet<>();
+
+    @OneToMany(mappedBy = "theme")
+    private Set<Article> articles = new HashSet<>();
 }
