@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
-
 @RestController
 @RequestMapping("/api/theme")
 public class ThemeController {

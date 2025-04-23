@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.article.model;
 
+import com.openclassrooms.mddapi.comment.model.Comment;
 import com.openclassrooms.mddapi.theme.model.Theme;
 import com.openclassrooms.mddapi.user.model.User;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
@@ -29,6 +31,9 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "theme_id", nullable = false)
     private Theme theme;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
