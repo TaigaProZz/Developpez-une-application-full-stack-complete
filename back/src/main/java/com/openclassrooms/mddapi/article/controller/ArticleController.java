@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.article.controller;
 
+import com.openclassrooms.mddapi.article.dto.ArticleWithCommentsDto;
 import com.openclassrooms.mddapi.article.dto.CreateArticleRequestDto;
 import com.openclassrooms.mddapi.article.dto.CreateArticleResponseDto;
 import com.openclassrooms.mddapi.article.dto.ArticleDto;
@@ -34,5 +35,13 @@ public class ArticleController {
         List<ArticleDto> articles = articleService.getAllArticles();
         // Return the articles in the response
         return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ArticleWithCommentsDto> getArticleById(@PathVariable Long id) {
+        // Get the article by ID using the service
+        ArticleWithCommentsDto article = articleService.getArticleById(id);
+        // Return the article in the response
+        return ResponseEntity.ok(article);
     }
 }
