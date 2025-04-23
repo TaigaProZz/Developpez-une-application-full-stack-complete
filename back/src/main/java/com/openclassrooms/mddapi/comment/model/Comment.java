@@ -1,7 +1,5 @@
 package com.openclassrooms.mddapi.comment.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.openclassrooms.mddapi.article.model.Article;
 import com.openclassrooms.mddapi.user.model.User;
 import jakarta.persistence.*;
