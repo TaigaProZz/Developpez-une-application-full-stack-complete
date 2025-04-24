@@ -38,7 +38,7 @@ export class CreateArticleComponent implements OnInit {
         {
           next: (response) => {
             this.snackBar.open(createArticleTextsConstants.SUCCESS_CREATE_ARTICLE, createArticleTextsConstants.BUTTON_SNACKBAR, {});
-            this.form.reset();
+            this.form.reset({themeId: ''});
           },
           error: (error) => {
             this.snackBar.open(createArticleTextsConstants.ERROR_CREATE_ARTICLE_FAILED, createArticleTextsConstants.BUTTON_SNACKBAR, {})
