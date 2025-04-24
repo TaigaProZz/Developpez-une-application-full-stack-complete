@@ -28,9 +28,11 @@ import { CreateArticleComponent } from './pages/create-article/create-article.co
 import {MatSelectModule} from "@angular/material/select";
 import { FeedComponent } from './pages/feed/feed.component';
 import { ArticleCardComponent } from './component/article-card/article-card.component';
+import {ArticleDetailComponent} from "./pages/article-detail/article-detail.component";
+import { CommentCardComponent } from './component/comment-card/comment-card.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent, SubscriptionCardComponent, ThemesComponent, CreateArticleComponent, FeedComponent, ArticleCardComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, RegisterComponent, PlainButtonComponent, BurgerMenuComponent, NavbarComponent, ProfileComponent, SubscriptionCardComponent, ThemesComponent, CreateArticleComponent, FeedComponent, ArticleCardComponent, ArticleDetailComponent, CommentCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

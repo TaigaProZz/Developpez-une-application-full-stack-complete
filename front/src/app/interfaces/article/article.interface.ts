@@ -7,4 +7,5 @@ export interface ArticleInterface {
   authorName: string;
   createdAt: string;
   comments: Array<CommentInterface>;
+  themeName: string;
 }

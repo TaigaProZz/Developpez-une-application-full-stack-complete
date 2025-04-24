@@ -9,6 +9,7 @@ import {GuestGuard} from "./guards/guest-guard";
 import {ThemesComponent} from "./pages/themes/themes.component";
 import {CreateArticleComponent} from "./pages/create-article/create-article.component";
 import {FeedComponent} from "./pages/feed/feed.component";
+import {ArticleDetailComponent} from "./pages/article-detail/article-detail.component";
 
 // consider a guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'themes', component: ThemesComponent, canActivate: [AuthGuard] },
   { path: 'create-article', component: CreateArticleComponent, canActivate: [AuthGuard] },
   { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
+  { path: 'article-detail/:id', component: ArticleDetailComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
