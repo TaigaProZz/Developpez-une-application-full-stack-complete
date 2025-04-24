@@ -13,6 +13,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ArticleMapper {
+
   ArticleDto articleToArticleDto(Article article);
   Article articleDtoToArticle(ArticleDto articleDto);
 
@@ -27,7 +28,11 @@ public interface ArticleMapper {
   })
   ArticleWithCommentsDto articleToArticleWithCommentsDto(Article article, List<CommentDto> comments);
 
+  CommentDto commentToCommentDto(Comment comment);
+
   List<CommentDto> commentsToCommentDtos(List<Comment> comments);
 
   Article articleDtoToArticle(ArticleWithCommentsDto articleDto);
+
+  Comment commentDtoToComment(CommentDto commentDto);
 }
