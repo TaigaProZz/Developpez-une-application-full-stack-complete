@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {CreateArticleRequestInterface} from "../interfaces/article/create-article-request.interface";
 import {CreateArticleResponseInterface} from "../interfaces/article/create-article-response.interface";
+import {ArticleInterface} from "../interfaces/article/article.interface";
 
 @Injectable( {
   providedIn: 'root'
@@ -12,5 +13,9 @@ export class ArticleService {
 
   public createArticle(createArticleRequestInterface: CreateArticleRequestInterface): Observable<CreateArticleResponseInterface> {
     return this.httpClient.post<CreateArticleResponseInterface>('api/article', createArticleRequestInterface);
+  }
+
+  public getAllArticles(): Observable<ArticleInterface[]> {
+    return this.httpClient.get<ArticleInterface[]>('api/article');
   }
 }

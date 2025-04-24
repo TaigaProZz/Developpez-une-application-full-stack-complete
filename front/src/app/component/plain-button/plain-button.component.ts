@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class PlainButtonComponent implements OnInit {
 
   @Input() textButton: string = 'Button';
-  @Input() disabled!: boolean;
+  @Input() disabled: boolean = false;
 
   constructor() { }
 

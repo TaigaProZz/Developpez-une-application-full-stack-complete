@@ -15,7 +15,7 @@ export class GuestGuard implements CanActivate {
     if (!this.authService.isLogged) {
       return this.authService.heartbeat().pipe(
         map(user => {
-          return this.router.createUrlTree(['/profile']);
+          return this.router.createUrlTree(['/feed']);
         }),
         catchError(() => {
           this.authService.logout();
@@ -24,6 +24,6 @@ export class GuestGuard implements CanActivate {
       );
     }
 
-    return of(this.router.createUrlTree(['/profile']));
+    return of(this.router.createUrlTree(['/feed']));
   }
 }
