@@ -5,6 +5,7 @@ import com.openclassrooms.mddapi.errors.EmailAlreadyUsedException;
 import com.openclassrooms.mddapi.errors.NotFoundException;
 import com.openclassrooms.mddapi.user.dto.GetUserDto;
 import com.openclassrooms.mddapi.user.dto.UpdateUserDto;
+import com.openclassrooms.mddapi.user.mapper.UserMapper;
 import com.openclassrooms.mddapi.user.model.User;
 import com.openclassrooms.mddapi.user.repository.UserRepository;
 import lombok.Data;
@@ -18,10 +19,13 @@ public class UserService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final UserMapper userMapper;
 
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+    this.userMapper = userMapper;
+
   }
 
   /**
@@ -46,7 +50,6 @@ public class UserService {
         return this.userRepository.findByUsername(username).orElse(null);
     }
 
-
   /**
    * Retrieves a user by their unique identifier.
    *
@@ -54,7 +57,7 @@ public class UserService {
    * @return The User object matching the given identifier.
    * @throws NotFoundException if no user with the specified id is found.
    */
-  public User findUserById(Long id) {
+  public GetUserDto findUserById(Long id) {
     // try to find user by id, and throw error if not found
     User user = this.userRepository.findById(id).orElse(null);
     if (user == null) {
@@ -62,7 +65,7 @@ public class UserService {
     }
 
     // return user if found
-    return user;
+    return userMapper.userToUserDTO(user);
   }
 
   public User findUserByUsernameOrEmail(String input) {
@@ -129,13 +132,6 @@ public class UserService {
     }
     this.userRepository.save(user);
 
-    GetUserDto getUserDto = new GetUserDto();
-    getUserDto.setId(user.getId());
-    getUserDto.setEmail(user.getEmail());
-    getUserDto.setUsername(user.getUsername());
-    getUserDto.setCreated_at(user.getCreatedAt());
-    getUserDto.setUpdated_at(user.getUpdatedAt());
-    return getUserDto;
+    return userMapper.userToUserDTO(user);
   }
-
 }

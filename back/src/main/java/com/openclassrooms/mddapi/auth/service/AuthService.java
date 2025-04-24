@@ -6,6 +6,7 @@ import com.openclassrooms.mddapi.errors.EmailAlreadyUsedException;
 import com.openclassrooms.mddapi.errors.LoginFailedException;
 import com.openclassrooms.mddapi.errors.NotFoundException;
 import com.openclassrooms.mddapi.user.dto.GetUserDto;
+import com.openclassrooms.mddapi.user.mapper.UserMapper;
 import com.openclassrooms.mddapi.user.model.User;
 import com.openclassrooms.mddapi.user.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,11 +20,13 @@ public class AuthService {
   private final UserService userService;
   private final JwtService jwtService;
   private final PasswordEncoder passwordEncoder;
+  private final UserMapper userMapper;
 
-  public AuthService(UserService userService, JwtService jwtService, PasswordEncoder passwordEncoder) {
+  public AuthService(UserService userService, JwtService jwtService, PasswordEncoder passwordEncoder, UserMapper userMapper) {
     this.userService = userService;
     this.jwtService = jwtService;
     this.passwordEncoder = passwordEncoder;
+    this.userMapper = userMapper;
   }
 
   /**
@@ -88,13 +91,6 @@ public class AuthService {
     }
 
     // map to dto
-    GetUserDto getUserDto = new GetUserDto();
-    getUserDto.setId(user.getId());
-    getUserDto.setEmail(user.getEmail());
-    getUserDto.setUsername(user.getUsername());
-    getUserDto.setCreated_at(user.getCreatedAt());
-    getUserDto.setUpdated_at(user.getUpdatedAt());
-    return getUserDto;
+    return userMapper.userToUserDTO(user);
   }
-
 }

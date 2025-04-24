@@ -13,6 +13,6 @@ public class GetUserDto {
     private Long id;
     private String email;
     private String username;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
