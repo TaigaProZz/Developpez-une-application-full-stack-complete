@@ -36,8 +36,8 @@ public class AuthService {
    *                              if the provided password is incorrect.
    */
   public String login(LoginDto loginDto) {
-    // try to find user by email. if user not found or password is incorrect
-    User user = userService.findUserByEmail(loginDto.getUsername());
+    // try to find user by email or username
+    User user = userService.findUserByUsernameOrEmail(loginDto.getUsername());
     if (user == null || !passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
       throw new LoginFailedException("Email ou mot de passe incorrect.");
     }
@@ -45,6 +45,7 @@ public class AuthService {
     // generate token and return it
     return jwtService.generateToken(user.getEmail());
   }
+
 
   /**
    * Registers a new user by saving their details and generating a JWT token.

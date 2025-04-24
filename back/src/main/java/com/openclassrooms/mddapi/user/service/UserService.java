@@ -46,6 +46,7 @@ public class UserService {
         return this.userRepository.findByUsername(username).orElse(null);
     }
 
+
   /**
    * Retrieves a user by their unique identifier.
    *
@@ -62,6 +63,10 @@ public class UserService {
 
     // return user if found
     return user;
+  }
+
+  public User findUserByUsernameOrEmail(String input) {
+    return userRepository.findByEmailOrUsername(input, input).orElse(null);
   }
 
   /**
