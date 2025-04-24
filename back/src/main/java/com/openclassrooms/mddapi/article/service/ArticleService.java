@@ -4,6 +4,7 @@ import com.openclassrooms.mddapi.article.dto.ArticleWithCommentsDto;
 import com.openclassrooms.mddapi.article.dto.CreateArticleRequestDto;
 import com.openclassrooms.mddapi.article.dto.CreateArticleResponseDto;
 import com.openclassrooms.mddapi.article.dto.ArticleDto;
+import com.openclassrooms.mddapi.article.mapper.ArticleMapper;
 import com.openclassrooms.mddapi.article.model.Article;
 import com.openclassrooms.mddapi.article.repository.ArticleRepository;
 import com.openclassrooms.mddapi.comment.dto.CommentDto;
@@ -29,12 +30,14 @@ public class ArticleService {
   private final UserRepository userRepository;
   private final ThemeRepository themeRepository;
   private final CommentRepository commentRepository;
+  private final ArticleMapper articleMapper;
 
-  public ArticleService (ArticleRepository articleRepository, UserRepository userRepository, ThemeRepository themeRepository, CommentRepository commentRepository) {
+  public ArticleService (ArticleRepository articleRepository, UserRepository userRepository, ThemeRepository themeRepository, CommentRepository commentRepository, ArticleMapper articleMapper) {
     this.articleRepository = articleRepository;
     this.userRepository = userRepository;
     this.themeRepository = themeRepository;
     this.commentRepository = commentRepository;
+    this.articleMapper = articleMapper;
   }
 
   public CreateArticleResponseDto createArticle(CreateArticleRequestDto createArticleRequestDto, Principal principal) {
@@ -44,11 +47,12 @@ public class ArticleService {
     Theme theme = themeRepository.findById(createArticleRequestDto.getThemeId())
             .orElseThrow(() -> new NotFoundException("Theme not found"));
 
-    Article article = new Article();
-    article.setTitle(createArticleRequestDto.getTitle());
-    article.setContent(createArticleRequestDto.getContent());
-    article.setAuthor(author);
-    article.setTheme(theme);
+    Article article = Article.builder()
+            .title(createArticleRequestDto.getTitle())
+            .content(createArticleRequestDto.getContent())
+            .author(author)
+            .theme(theme)
+            .build();
 
     articleRepository.save(article);
     return new CreateArticleResponseDto("Article created successfully");
@@ -61,18 +65,9 @@ public class ArticleService {
 
     List<Article> articles = articleRepository.findArticlesByUserSubscribedThemes(user.getId());
 
-    List<ArticleDto> articleDtos = new ArrayList<>();
-    for (Article article : articles) {
-      ArticleDto articleDto = new ArticleDto();
-      articleDto.setId(article.getId());
-      articleDto.setTitle(article.getTitle());
-      articleDto.setContent(article.getContent());
-      articleDto.setAuthorName(article.getAuthor().getUsername());
-      articleDto.setCreatedAt(article.getCreatedAt());
-      articleDtos.add(articleDto);
-    }
-
-    return articleDtos;
+    return articles.stream()
+            .map(articleMapper::articleToArticleDto)
+            .toList();
   }
 
 
@@ -89,15 +84,6 @@ public class ArticleService {
                     comment.getUser().getUsername()))
             .toList();
 
-    ArticleWithCommentsDto articleWithCommentsDto  = new ArticleWithCommentsDto();
-    articleWithCommentsDto.setId(article.getId());
-    articleWithCommentsDto.setTitle(article.getTitle());
-    articleWithCommentsDto.setContent(article.getContent());
-    articleWithCommentsDto.setAuthorName(article.getAuthor().getUsername());
-    articleWithCommentsDto.setComments(commentDtos);
-    articleWithCommentsDto.setThemeName(article.getTheme().getTitle());
-    articleWithCommentsDto.setCreatedAt(article.getCreatedAt());
-
-    return articleWithCommentsDto;
+    return articleMapper.articleToArticleWithCommentsDto(article, commentDtos);
   }
 }

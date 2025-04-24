@@ -5,7 +5,10 @@ import com.openclassrooms.mddapi.theme.model.Theme;
 import com.openclassrooms.mddapi.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,7 +17,10 @@ import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @Table(name = "Articles")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
