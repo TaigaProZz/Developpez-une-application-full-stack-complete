@@ -34,10 +34,11 @@ public class CommentService {
     Article article = articleRepository.findById(createCommentRequestDto.getArticleId())
         .orElseThrow(() -> new NotFoundException("Article non trouvé"));
 
-    Comment comment = new Comment();
-    comment.setContent(createCommentRequestDto.getContent());
-    comment.setUser(user);
-    comment.setArticle(article);
+    Comment comment = Comment.builder()
+        .content(createCommentRequestDto.getContent())
+        .user(user)
+        .article(article)
+        .build();
 
     commentRepository.save(comment);
   }

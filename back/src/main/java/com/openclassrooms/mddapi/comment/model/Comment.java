@@ -4,10 +4,17 @@ import com.openclassrooms.mddapi.article.model.Article;
 import com.openclassrooms.mddapi.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Comment {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
