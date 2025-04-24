@@ -30,9 +30,9 @@ public class ArticleController {
     }
 
     @GetMapping()
-    public ResponseEntity< List<ArticleDto>> getAllArticles() {
+    public ResponseEntity< List<ArticleDto>> getAllArticles(Principal principal) {
         // Get all articles using the service
-        List<ArticleDto> articles = articleService.getAllArticles();
+        List<ArticleDto> articles = articleService.getArticlesByUserThemes(principal);
         // Return the articles in the response
         return ResponseEntity.ok(articles);
     }

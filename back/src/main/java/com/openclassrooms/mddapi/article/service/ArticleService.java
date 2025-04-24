@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Service
@@ -53,8 +54,12 @@ public class ArticleService {
     return new CreateArticleResponseDto("Article created successfully");
   }
 
-  public List<ArticleDto> getAllArticles() {
-    Iterable<Article> articles = articleRepository.findAll();
+  public List<ArticleDto> getArticlesByUserThemes(Principal principal) {
+    User user = userRepository.findByEmail(principal.getName())
+            .orElseThrow(() -> new NotFoundException("User not found"));
+
+
+    List<Article> articles = articleRepository.findArticlesByUserSubscribedThemes(user.getId());
 
     List<ArticleDto> articleDtos = new ArrayList<>();
     for (Article article : articles) {
@@ -69,6 +74,7 @@ public class ArticleService {
 
     return articleDtos;
   }
+
 
   public ArticleWithCommentsDto getArticleById(Long id) {
     Article article = articleRepository.findById(id)
