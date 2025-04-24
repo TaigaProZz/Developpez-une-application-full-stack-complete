@@ -8,6 +8,7 @@
   <div class="w-full flex justify-center">
     <app-plain-button
       [textButton]="buttonText"
+      [disabled]="isSubscribed"
       (click)="onButtonClick()">
       >
     </app-plain-button>

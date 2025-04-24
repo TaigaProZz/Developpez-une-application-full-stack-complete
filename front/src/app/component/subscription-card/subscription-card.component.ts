@@ -9,6 +9,7 @@ import {ThemeInterface} from "../../interfaces/theme/theme.interface";
 export class SubscriptionCardComponent implements OnInit {
   @Input() subscription!: ThemeInterface
   @Input() buttonText!: string;
+  @Input() isSubscribed!: boolean;
   @Output() subscribeId = new EventEmitter<number>();
 
   constructor() { }
@@ -18,6 +19,4 @@ export class SubscriptionCardComponent implements OnInit {
   public onButtonClick(): void {
     this.subscribeId.emit(this.subscription.id);
   }
-
-
 }

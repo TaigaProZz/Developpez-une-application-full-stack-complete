@@ -2,6 +2,7 @@
   <app-subscription-card
     *ngFor="let subscription of allThemes"
     [subscription]="subscription"
+    [isSubscribed]="isSubscribed(subscription.id)"
     (subscribeId)="handleSubscription($event)"
     [buttonText]="isSubscribed(subscription.id) ? 'Déjà abonné' : 'S\'abonner'">
   </app-subscription-card>
