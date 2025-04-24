@@ -18,4 +18,5 @@ public class ArticleWithCommentsDto {
   private String authorName;
   private LocalDateTime createdAt;
   private List<CommentDto> comments;
+  private String themeName;
 }

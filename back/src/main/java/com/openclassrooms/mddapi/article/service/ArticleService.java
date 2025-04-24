@@ -89,6 +89,7 @@ public class ArticleService {
     articleWithCommentsDto.setContent(article.getContent());
     articleWithCommentsDto.setAuthorName(article.getAuthor().getUsername());
     articleWithCommentsDto.setComments(commentDtos);
+    articleWithCommentsDto.setThemeName(article.getTheme().getTitle());
     articleWithCommentsDto.setCreatedAt(article.getCreatedAt());
 
     return articleWithCommentsDto;
