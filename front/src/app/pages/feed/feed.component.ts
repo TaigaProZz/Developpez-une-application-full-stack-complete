@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {feedTextsConstants} from "../../const/FEED_TEXTS";
-import {ArticleInterface} from "../../interfaces/article/article.interface";
 import {ArticleService} from "../../services/article.service";
 import {Router} from "@angular/router";
+import {ArticleCardInterface} from "../../interfaces/article/article-card.interface";
 
 @Component({
   selector: 'app-feed',
@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 export class FeedComponent implements OnInit {
   protected readonly feedTextsConstants = feedTextsConstants;
   public feedSortingLatest: boolean = false;
-  public articles: ArticleInterface[] = [];
+  public articles: ArticleCardInterface[] = [];
 
   constructor(
     private articleService: ArticleService,
@@ -20,12 +20,12 @@ export class FeedComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.articleService.getAllArticles().subscribe((articles: ArticleInterface[]) => {
+    this.articleService.getAllArticles().subscribe((articles: ArticleCardInterface[]) => {
       this.articles = articles;
     });
   }
 
-  onArticleClick(article: ArticleInterface) {
+  onArticleClick(article: ArticleCardInterface) {
     this.router.navigate(['/article-detail', article.id]);
   }
 
